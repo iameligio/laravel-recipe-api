@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Resources\Recipe\RecipeResource;
 use App\Recipe;
+use App\Ingredient;
+use App\Instrunction;
 use Illuminate\Http\Request;
 
 class RecipeController extends Controller
@@ -14,7 +17,7 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        //
+        return Recipe::all();
     }
 
     /**
@@ -46,7 +49,7 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        //
+        return new RecipeResource($recipe);
     }
 
     /**
