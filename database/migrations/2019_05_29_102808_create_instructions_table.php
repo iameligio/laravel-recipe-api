@@ -15,8 +15,8 @@ class CreateInstructionsTable extends Migration
     {
         Schema::create('instructions', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('instruction');
-            $table->integer('recipe_id');
+            $table->text('instruction');
+            $table->unsignedInteger('recipe_id');
             $table->timestamps();
         });
     }

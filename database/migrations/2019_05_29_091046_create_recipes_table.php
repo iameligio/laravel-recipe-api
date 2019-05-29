@@ -16,12 +16,12 @@ class CreateRecipesTable extends Migration
         Schema::create('recipes', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('recipe_name');
-            $table->integer('category_id');
+            $table->unsignedInteger('category_id')->index();
             $table->string('image');
             $table->string('publisher');
             $table->string('publisher_url');
             $table->string('source_url');
-            $table->string('recipe_slug');
+            $table->string('recipe_slug')->unique();
             $table->timestamps();
         });
     }
