@@ -19,7 +19,7 @@ class RecipeController extends Controller
      */
     public function index()
     {
-        $recipes = Recipe::all();
+        $recipes = Recipe::paginate(20);
 
         //return $recipes;
 
