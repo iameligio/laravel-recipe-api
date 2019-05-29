@@ -2,11 +2,15 @@
 
 /* @var $factory \Illuminate\Database\Eloquent\Factory */
 
-use App\Instructions;
+use App\Instruction;
+use App\Recipe;
 use Faker\Generator as Faker;
 
-$factory->define(Instructions::class, function (Faker $faker) {
+$factory->define(Instruction::class, function (Faker $faker) {
     return [
-        //
+        'instruction' => $faker->sentence,
+        'recipe_id' => function() {
+            return Recipe::all()->random();
+        }
     ];
 });
