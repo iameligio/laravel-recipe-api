@@ -49,7 +49,10 @@ class RecipeController extends Controller
      */
     public function show(Recipe $recipe)
     {
-        return new RecipeResource($recipe);
+       $recipe['ingredient'] = $recipe->ingredients;
+       $recipe['instruction'] = $recipe->instructions;
+
+       return new RecipeResource($recipe);
     }
 
     /**
