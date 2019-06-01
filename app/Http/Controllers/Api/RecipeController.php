@@ -2,16 +2,22 @@
 
 namespace App\Http\Controllers\Api;
 
-
+use App\Http\Requests\RecipeRequest;
 use App\Http\Resources\Recipe\RecipeResource;
 use App\Http\Resources\Recipe\RecipeCollection;
 use App\Recipe;
 use App\Ingredient;
-use App\Instrunction;
+use App\Instruction;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class RecipeController extends Controller
 {
+    public function __construct(){
+
+        $this->middleware('auth:api')->except('index','show');
+
+    }
     /**
      * Display a listing of the resource.
      *
@@ -42,9 +48,49 @@ class RecipeController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(RecipeRequest $request)
     {
-        //
+
+
+        $recipe = Recipe::create([
+
+            'recipe_name'   => $request->recipe_name,
+            'category_id'   => $request->category_id,
+            'image'         => $request->image,
+            'publisher'     => $request->publisher,
+            'publisher_url' => $request->publisher_url,
+            'source_url'    => $request->source_url,
+            'recipe_slug'   => $request->recipe_slug,
+
+
+        ]);
+
+
+        if(is_array($request->instructions)) {
+            foreach($request->instructions as $instruction) {
+            Instruction::create([
+                'instruction' => $instruction,
+                'recipe_id' => $recipe->id
+            ]);
+        }
+        }
+
+        if(is_array($request->ingredients)){
+            foreach($request->ingredients as $ingredient) {
+            Ingredient::create([
+                'ingredient' => $ingredient,
+                'recipe_id' => $recipe->id
+            ]);
+        }
+        }
+
+
+        return response([
+            'data' => new RecipeResource($recipe)
+
+        ],Response::HTTP_CREATED);
+
+
     }
 
     /**

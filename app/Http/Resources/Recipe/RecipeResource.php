@@ -14,13 +14,14 @@ class RecipeResource extends JsonResource
      */
     public function toArray($request)
     {
+        //return $request;
         $ingredient =[];
-        foreach($this->ingredient as $sangkap) {
+        foreach($this->ingredients as $sangkap) {
             $ingredient[] = $sangkap->ingredient;
         }
 
         $instruction =[];
-        foreach($this->instruction as $paraan) {
+        foreach($this->instructions as $paraan) {
             $instruction[] = $paraan->instruction;
         }
 
